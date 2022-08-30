@@ -1,0 +1,18 @@
+- hosts: masters
+  user: root
+  vars:
+    etcdDir: /var/lib/etcd
+  tasks:
+   - name: Check existence of etcd data directory
+     stat:
+       path: '{{ etcdDir }}'
+     register: etcd_data_dir
+
+   - name: Set ownership and permissions on etcd data directory
+     file:
+       path: '{{ etcdDir }}'
+       owner: etcd
+       group: etcd
+       mode: '0700'
+     when: etcd_data_dir.stat.exists
+     

@@ -1,0 +1,17 @@
+- hosts: nodes
+  user: root
+  vars:
+    NodeConfigFile: /etc/origin/node/node-config.yaml
+  tasks:
+   - name: Check existence of node config {{ NodeConfigFile }}
+     stat:
+       path: '{{ NodeConfigFile }}'
+     register: nodeconfig_file
+
+   - name: Configure qps event option to zero (unlimited) in {{ NodeConfigFile }} for TSS 10.11
+     lineinfile:
+       path: '{{ NodeConfigFile }}'
+       regex: 'qps:'
+       line: '  qps: 0'
+     when: nodeconfig_file.stat.exists
+

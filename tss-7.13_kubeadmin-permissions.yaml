@@ -1,0 +1,18 @@
+- hosts: masters
+  user: root
+  vars:
+     KubeAdminFile: "/etc/origin/master/admin.kubeconfig"
+  tasks:
+   - name: Check existence of kube admin file {{ KubeAdminFile }}
+     stat:
+       path: '{{ KubeAdminFile }}'
+     register: kubeadmin_file
+
+   - name: Set ownership and permissions on {{ KubeAdminFile }}
+     file:
+       path: '{{ KubeAdminFile }}'
+       owner: root
+       group: root
+       mode: '0644'
+     when: kubeadmin_file.stat.exists
+     

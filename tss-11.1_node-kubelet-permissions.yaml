@@ -1,0 +1,18 @@
+- hosts: masters
+  user: root
+  vars:
+     KubeletFile: "/etc/origin/node/node-kubeconfig"
+  tasks:
+   - name: Check existence of kubelet file {{ KubeletFile }}
+     stat:
+       path: '{{ NodeConfigFile }}'
+     register: kubelet_file
+
+   - name: Set ownership and permissions on {{ KubeletFile }}
+     file:
+       path: '{{ KubeletFile }}'
+       owner: root
+       group: root
+       mode: '0600'
+     when: kubelet_file.stat.exists
+     
