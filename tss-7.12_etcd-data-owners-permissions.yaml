@@ -1,4 +1,4 @@
-- hosts: masters
+- hosts: nodes
   user: root
   vars:
     etcdDir: /var/lib/etcd

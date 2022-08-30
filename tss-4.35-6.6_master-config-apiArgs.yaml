@@ -1,4 +1,4 @@
-- hosts: masters
+- hosts: nodes
   user: root
   vars:
     MasterConfigFile: /etc/origin/master/master-config.yaml

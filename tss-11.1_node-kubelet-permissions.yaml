@@ -1,4 +1,4 @@
-- hosts: masters
+- hosts: nodes
   user: root
   vars:
      KubeletFile: "/etc/origin/node/node-kubeconfig"
