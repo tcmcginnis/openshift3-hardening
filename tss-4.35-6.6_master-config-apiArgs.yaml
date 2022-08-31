@@ -17,4 +17,5 @@
                - AdvancedAuditing=true
                - RotateKubletServerCertificate=true
        state: present
+       marker: "# {mark} ANSIBLE MANAGED BLOCK - apiServerArgument section"
      when: masterconfig_file.stat.exists
