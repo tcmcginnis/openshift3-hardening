@@ -1,0 +1,14 @@
+    openshift.io/ImagePolicy:
+      configuration:
+        apiVersion: v1
+        executionRules:
+        - matchImageAnnotations:
+          - key: images.openshift.io/deny-execution
+            value: 'true'
+          name: execution-denied
+          onResources:
+          - resource: pods
+          - resource: builds
+          reject: true
+          skipOnResolutionFailure: true
+        kind: ImagePolicyConfig
