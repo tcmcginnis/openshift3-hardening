@@ -5,7 +5,7 @@
   tasks:
    - name: Check existence of kubelet file {{ KubeletFile }}
      stat:
-       path: '{{ NodeConfigFile }}'
+       path: '{{ KubeletFile }}'
      register: kubelet_file
 
    - name: Set ownership and permissions on {{ KubeletFile }}
