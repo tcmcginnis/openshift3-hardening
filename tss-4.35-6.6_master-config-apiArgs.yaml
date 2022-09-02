@@ -15,7 +15,32 @@
        block: |2
              feature-gates:
                - AdvancedAuditing=true
-               - RotateKubletServerCertificate=true
+               - RotateKubeletServerCertificate=true
        state: present
        marker: "# {mark} ANSIBLE MANAGED BLOCK - apiServerArgument section"
+       backup: true
      when: masterconfig_file.stat.exists
+
+   - name: Restart Openshift master service
+     shell: >
+       master-restart api
+     when: masterconfig_file.stat.exists
+
+# Note: About the port number ;-)
+#       Use this command (or one similar) to get the actual PORT number.
+#         >>>>  oc whoami --show-server|sed 's/.*://'
+#       rather than hard-coding it in the "url:"
+   - name: master-api healthcheck
+     uri:
+#       url: https://127.0.0.1/healthz
+       url: https://127.0.0.1:8443/healthz
+       method: GET
+       validate_certs: no
+       follow_redirects: yes
+       return_content: yes
+     register: _response
+     until: _response.status == 200
+     retries: 300
+     delay: 2
+     when: masterconfig_file.stat.exists
+     

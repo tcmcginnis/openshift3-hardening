@@ -9,17 +9,17 @@
 - name: tss 7.13 - Set ownership and permissions on master kubeconfigs
   import_playbook: tss-7.13_kubeadmin-permissions.yaml
 
-- name: tss 7.15 and tss 7.17 - 
+- name: tss 7.15 and tss 7.17 - Set ownership and permissions on Master Kubeconfig
   import_playbook: tss-7.15-7.17_master-kubeconfig-ownership-permissions.yaml
 
-- name: tss 9.7 -
+- name: tss 9.7 - Configure Image Provenance Plugin in Openshift Master config
   import_playbook: tss-9.7_master-config-image-Provenance-plugin.yaml
 
-- name: tss 10.11 -
+- name: tss 10.11 - Configure event-qps section in Node Config
   import_playbook: tss-10.11_node-config-qps.yaml
 
-- name: tss 11.1 -
+- name: tss 11.1 - Set ownership and permissions on node Kubelet
   import_playbook: tss-11.1_node-kubelet-permissions.yaml
 
-- name: tss 11.5 -
+- name: tss 11.5 - Set ownership and permissions on Openshift Node config
   import_playbook: tss-11.5_node-kubeconfig-permissions.yaml

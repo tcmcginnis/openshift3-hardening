@@ -8,10 +8,19 @@
        path: '{{ NodeConfigFile }}'
      register: nodeconfig_file
 
-   - name: Configure qps event option to zero (unlimited) in {{ NodeConfigFile }} for TSS 10.11
-     lineinfile:
+   - name: Configure event-qps section in {{ NodeConfigFile }} for TSS 10.11
+     blockinfile:
        path: '{{ NodeConfigFile }}'
-       regex: 'qps:'
-       line: '  qps: 0'
+       insertafter: "kubeletArguments:"
+       block: |2
+           event-qps:
+           - '0'
+       state: present
+       marker: "# {mark} ANSIBLE MANAGED BLOCK - event-qps section"
+       backup: true
      when: nodeconfig_file.stat.exists
 
+   - name: Restart kubelet service
+     shell: >
+       systemctl restart atomic-openshift-node
+     when: nodeconfig_file.stat.exists
